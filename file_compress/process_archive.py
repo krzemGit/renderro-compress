@@ -19,9 +19,9 @@ class Process_archive:
         return self.hash
 
     def update_status_file(self, status):
-        # check if the same hash exists, while loop
         if status == self.statuses[0]:
             pass  # function to check if there are no similar hashes - I run out of time to do it
+
         # check errors and include them in status
         if status == self.statuses[1]:
             if self.errors == len(self.link_list):
@@ -39,7 +39,6 @@ class Process_archive:
             shutil.copyfileobj(filecontent.raw, new_file)
 
     def downlaod_files_from_lists(self):
-        # major error check here, with requests library
         for index, url in enumerate(self.link_list):
             try:
                 with requests.get(url, timeout=self.timeout, stream=True) as file_content:
@@ -48,7 +47,7 @@ class Process_archive:
                         self.save_file_to_temp(file_name, file_content, index)
                     else:
                         self.errors += 1
-            # error
+            # error handling
             except requests.exceptions.HTTPError as errh:
                 self.errors += 1
                 print(errh)
@@ -68,23 +67,22 @@ class Process_archive:
         shutil.make_archive(hash_archive, 'zip', hash_temp_folder)
 
     def delete_temp_dir(self):
-        # os.rmdir(os.path.join('temp', self.hash))
         if os.path.isdir(self.pathmaker.get_temp_path(self.hash)):
             shutil.rmtree(self.pathmaker.get_temp_path(self.hash), self.hash)
 
     def execute(self):
         ''' the main method, calls other methods in desired order '''
 
-        print('creating status file')
+        # print('creating status file')
         self.update_status_file(self.statuses[0])
-        print('creating temp directory')
+        # print('creating temp directory')
         self.create_temp_dir()
-        print('downloading files')
+        # print('downloading files')
         self.downlaod_files_from_lists()
-        print('creating archive')
+        # print('creating archive')
         self.create_archive()
-        print('updating status file')
+        # print('updating status file')
         self.update_status_file(self.statuses[1])
-        print('deleting temp folder')
+        # print('deleting temp folder')
         self.delete_temp_dir()
-        print('done')
+        # print('done')

@@ -44,13 +44,12 @@ async def create_archive(urls: ItemList, background_tasks: BackgroundTasks) -> d
 @app.get('/api/archive/status/{hash}', tags=['archive'])
 def check_hash_status(hash: str) -> dict:
 
+    status = 'error'
     info_path = pathmaker.get_hash_status_path(f'{hash}.txt')
 
     # error if path/hash is incorrect
     if not os.path.isfile(info_path):
         return {'error': 'Incorrect hash, no such archive'}
-
-    status = 'error'
 
     with open(info_path, 'r') as hash_status:
         status = hash_status.read()
