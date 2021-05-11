@@ -54,7 +54,7 @@ def check_hash_status(hash: str) -> dict:
     with open(info_path, 'r') as hash_status:
         status = hash_status.read()
 
-    return {'status': status, 'url': f'http://0.0.0.0:8009/api/archive/get/{hash}'}
+    return {'status': status, 'url': f'http://localhost/api/archive/get/{hash}'}
 
 
 @app.get('/api/archive/get/{hash}', tags=['archive'])
