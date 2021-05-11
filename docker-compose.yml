@@ -2,9 +2,8 @@ version: "3"
 services:
   app:
     container_name: file-compressor
-    restart: always
     build: .
     ports:
-      - "80:80"
+      - "80:8000"
     volumes:
       - ./data:/app/data

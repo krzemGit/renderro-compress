@@ -2,10 +2,10 @@ FROM python:3.7
 
 RUN pip install fastapi uvicorn starlette requests aiofiles
 
-EXPOSE 80
-
 WORKDIR /app
 
 COPY . /app
+
+EXPOSE 8000
 
 CMD ["python", "main.py"]

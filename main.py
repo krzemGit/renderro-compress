@@ -2,6 +2,6 @@ import uvicorn
 
 if __name__ == '__main__':
     uvicorn.run('file_compress.app:app',
-                host='localhost',
-                port=80,
+                host='0.0.0.0',
+                port=8000,
                 reload=False)
